@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StaffUp - Dual-Sided Scoring Engine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 StaffUp Scoring Engine</h1>
+            <p>Dual-sided matching for seasonal staffing</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('employer')">👔 Employer View</button>
+            <button class="tab-button" onclick="switchTab('candidate')">👤 Candidate View</button>
+        </div>
+
+        <div id="employer-tab" class="tab-content">
+            <h2>Employer Dashboard - Score Candidates</h2>
+            <p>Upload your job posting and candidate profiles or paste JSON data.</p>
+
+            <div class="data-input">
+                <h3>📋 Job Posting Data
+                    <button class="clear-btn" onclick="clearJobData()">Clear</button>
+                </h3>
+                <div class="file-upload">
+                    <input type="file" id="job-file" accept=".json" onchange="loadJobFile(event)">
+                </div>
+                <textarea id="job-data" placeholder="Paste job posting JSON here or upload file..."></textarea>
+
+                <details class="sample-data">
+                    <summary>📖 Sample Job Posting Format</summary>
+                    <pre>{
+  "title": "Summer Camp Counselor",
+  "company": "Adventure Summer Camp",
+  "role": "Camp Counselor", 
+  "location": "London",
+  "dates": {
+    "start": "2024-06-15",
+    "end": "2024-08-15"
+  },
+  "pay": 450,
+  "accommodation": "shared",
+  "visaSponsorship": false,
+  "requiredCertifications": ["DBS", "First Aid"],
+  "suitabilityTags": ["Works with Teens", "Outdoors", "Sports"]
+}</pre>
+                </details>
+            </div>
+
+            <div class="data-input">
+                <h3>👤 Candidate Profile(s) Data
+                    <button class="clear-btn" onclick="clearCandidateData()">Clear</button>
+                </h3>
+                <div class="file-upload">
+                    <input type="file" id="candidate-file" accept=".json" onchange="loadCandidateFile(event)">
+                </div>
+                <textarea id="candidate-data"
+                    placeholder="Paste candidate profile(s) JSON here or upload file..."></textarea>
+
+                <details class="sample-data">
+                    <summary>📖 Sample Candidate Profile Format</summary>
+                    <pre>{
+  "name": "Emma Johnson",
+  "email": "emma.johnson@email.com",
+  "phone": "+44123456789",
+  "availability": {
+    "start": "2024-06-01",
+    "end": "2024-08-31"
+  },
+  "experience": 2,
+  "certifications": ["DBS", "First Aid", "Safeguarding"],
+  "psychometricScore": 88,
+  "trainingModules": 4,
+  "suitabilityTags": ["Works with Teens", "Outdoors", "Leadership"],
+  "preferences": {
+    "roles": ["Camp Counselor", "Activity Leader"],
+    "locations": ["London", "Manchester"],
+    "accommodation": "shared",
+    "minPay": 400
+  },
+  "visaStatus": "eligible"
+}</pre>
+                </details>
+            </div>
+
+            <button class="btn" onclick="scoreCandidate()">Score Candidate(s)</button>
+            <div id="employer-results" class="results"></div>
+        </div>
+
+        <div id="candidate-tab" class="tab-content" style="display: none;">
+            <h2>Candidate Dashboard - Find Matching Jobs</h2>
+            <p>Upload your profile and job postings or paste JSON data.</p>
+
+            <div class="data-input">
+                <h3>👤 Your Profile Data
+                    <button class="clear-btn" onclick="clearProfileData()">Clear</button>
+                </h3>
+                <div class="file-upload">
+                    <input type="file" id="profile-file" accept=".json" onchange="loadProfileFile(event)">
+                </div>
+                <textarea id="candidate-profile"
+                    placeholder="Paste your candidate profile JSON here or upload file..."></textarea>
+            </div>
+
+            <div class="data-input">
+                <h3>💼 Job Posting(s) Data
+                    <button class="clear-btn" onclick="clearJobProfileData()">Clear</button>
+                </h3>
+                <div class="file-upload">
+                    <input type="file" id="job-profile-file" accept=".json" onchange="loadJobProfileFile(event)">
+                </div>
+                <textarea id="job-profile" placeholder="Paste job posting(s) JSON here or upload file..."></textarea>
+
+                <details class="sample-data">
+                    <summary>📖 Sample Jobs Array Format</summary>
+                    <pre>[
+  {
+    "title": "Summer Camp Counselor",
+    "company": "Adventure Summer Camp",
+    "role": "Camp Counselor",
+    "location": "London",
+    "dates": {
+      "start": "2024-06-15", 
+      "end": "2024-08-15"
+    },
+    "pay": 450,
+    "accommodation": "shared",
+    "visaSponsorship": false,
+    "requiredCertifications": ["DBS", "First Aid"],
+    "suitabilityTags": ["Works with Teens", "Outdoors"]
+  }
+]</pre>
+                </details>
+            </div>
+
+            <button class="btn" onclick="scoreJob()">Score Job(s)</button>
+            <div id="candidate-results" class="results"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="file-handlers.js"></script>
+    <script src="scoring-engine.js"></script>
+    <script src="display.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
